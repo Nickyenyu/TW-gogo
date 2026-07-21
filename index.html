@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>候選人戰力整備與宣傳點位調查系統</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+    <header class="bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md py-6 px-4 mb-8">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold tracking-wide">候選人戰力整備與宣傳點位調查</h1>
+                <p class="text-emerald-100 text-sm mt-1">請詳實填寫，本數據將作為後續精準選戰佈局與點位熱點分析使用。</p>
+            </div>
+            <i data-lucide="award" class="w-10 h-10 text-emerald-200 hidden sm:block"></i>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pb-24">
+        <form id="surveyForm" class="space-y-8">
+
+            <section class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="flex items-center gap-2 mb-6 border-b pb-3">
+                    <i data-lucide="user" class="text-emerald-600 w-6 h-6"></i>
+                    <h2 class="text-lg font-bold text-slate-800">基本資料</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">候選人姓名 <span class="text-red-500">*</span></label>
+                        <input type="text" required name="candidate_name" placeholder="請輸入姓名" class="w-full rounded-lg border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">參選選區 / 職稱 <span class="text-red-500">*</span></label>
+                        <input type="text" required name="constituency" placeholder="例：台北市萬華區議員、OO里長" class="w-full rounded-lg border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">黨籍 <span class="text-red-500">*</span></label>
+                        <input type="text" required name="political_party" placeholder="例：無黨籍、OO黨" class="w-full rounded-lg border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">填表人 / 聯絡窗口 <span class="text-red-500">*</span></label>
+                        <input type="text" required name="contact_person" placeholder="例：陳幕僚" class="w-full rounded-lg border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">聯絡電話 <span class="text-red-500">*</span></label>
+                        <input type="tel" required name="contact_phone" placeholder="例：0912-345-678" class="w-full rounded-lg border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="flex items-center gap-2 mb-6 border-b pb-3">
+                    <i data-lucide="users" class="text-emerald-600 w-6 h-6"></i>
+                    <h2 class="text-lg font-bold text-slate-800">陸軍戰力整備 (實體組織)</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-semibold text-slate-700 mb-3">1. 組織與人力規模</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="bg-slate-50 p-4 rounded-xl">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">有給薪志工 (人)</label>
+                                <p class="text-[11px] text-slate-500 mb-2 leading-tight">固定薪資及固定上班</p>
+                                <input type="number" min="0" name="paid_volunteers" class="w-full bg-transparent border-b border-slate-300 focus:border-emerald-500 focus:outline-none text-lg font-semibold py-1">
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">無給薪志工 (人)</label>
+                                <p class="text-[11px] text-slate-500 mb-2 leading-tight">無支薪但每週固定可支援二天以上</p>
+                                <input type="number" min="0" name="unpaid_volunteers" class="w-full bg-transparent border-b border-slate-300 focus:border-emerald-500 focus:outline-none text-lg font-semibold py-1">
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl">
+                                <label class="block text-sm font-semibold text-slate-700 mb-1">親友團/後援會 (人)</label>
+                                <p class="text-[11px] text-slate-500 mb-2 leading-tight">無支薪且依照個人時間不定時支援</p>
+                                <input type="number" min="0" name="supporter_club_size" class="w-full bg-transparent border-b border-slate-300 focus:border-emerald-500 focus:outline-none text-lg font-semibold py-1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100">
+                        <h3 class="text-sm font-semibold text-slate-700 mb-3">2. 地方頭人與里長經營</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm text-slate-600 mb-2">知道選區內總共有幾個里嗎？</label>
+                                <input type="number" min="0" name="total_boroughs" placeholder="請輸入里數" class="w-full sm:w-1/3 rounded-lg border border-slate-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                            </div>
+                            
+                            <!-- 拜訪選區內里長達2次以上 -->
+                            <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                                <div class="flex items-center justify-between w-full">
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" name="has_visited_wardens" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                        <span class="font-medium text-slate-700 text-base">已拜訪選區內里長達 2 次以上</span>
+                                    </label>
+                                    <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                        <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                                    </span>
+                                </div>
+                                <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                                    <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫里別與姓名（單筆填寫，可點擊新增）：</p>
+                                    <div class="inputs-container space-y-2">
+                                        <div class="input-group flex items-start gap-2">
+                                            <input type="text" name="warden_visited[]" oninput="updateInputStatus(this)" placeholder="例：和平里 - 王大明" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                            <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                                <i data-lucide="x" class="w-5 h-5"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="addInput(this, 'warden_visited[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                        <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆里長資料
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 是否有和非現任里長之候選人達成合作意願 -->
+                            <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                                <div class="flex items-center justify-between w-full">
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" name="has_non_incumbent_coop" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                        <span class="font-medium text-slate-700 text-base">有和非現任里長之候選人達成合作意願</span>
+                                    </label>
+                                    <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                        <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                                    </span>
+                                </div>
+                                <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                                    <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫里別與姓名（單筆填寫，可點擊新增）：</p>
+                                    <div class="inputs-container space-y-2">
+                                        <div class="input-group flex items-start gap-2">
+                                            <input type="text" name="warden_coop[]" oninput="updateInputStatus(this)" placeholder="例：建國里 - 李小華" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                            <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                                <i data-lucide="x" class="w-5 h-5"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="addInput(this, 'warden_coop[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                        <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆候選人資料
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm text-slate-600 mb-1">其他地方關係簡述：</label>
+                                <textarea name="local_relation_desc" rows="2" placeholder="例：多數持中立態度，有3位里長承諾積極協助..." class="w-full rounded-lg border border-slate-200 p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100" id="propaganda-section">
+                <div class="flex items-center gap-2 mb-4 border-b pb-3">
+                    <i data-lucide="map-pin" class="text-emerald-600 w-6 h-6"></i>
+                    <h2 class="text-lg font-bold text-slate-800">宣傳點位調查</h2>
+                </div>
+                
+                <p class="text-slate-500 text-sm mb-6">
+                    請勾選您目前擁有的宣傳點位類型。若勾選「有」，請在展開的欄位中填寫詳細點位地址。若同類型有多個點位，請點擊下方的「+ 新增一筆」按鈕來增加填寫欄位。
+                </p>
+
+                <div id="propaganda-container" class="space-y-4">
+                    
+                    <!-- 1. 看板 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_billboard" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">看板</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫詳細地址（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="address_billboard[]" oninput="updateInputStatus(this)" placeholder="例：中山路與中正路交叉口" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'address_billboard[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆看板
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. 布條 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_banner" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">布條</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫詳細地址（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="address_banner[]" oninput="updateInputStatus(this)" placeholder="例：和平街20號前欄杆" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'address_banner[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆布條
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. 海報 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_poster" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">海報</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫張貼地點（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="address_poster[]" oninput="updateInputStatus(this)" placeholder="例：里民活動中心佈告欄" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'address_poster[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆海報
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4. 友善合作店家 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_friendly_shop" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">友善合作店家（面紙鋪張點）</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫店家名稱與地址（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="address_friendly_shop[]" oninput="updateInputStatus(this)" placeholder="例：陳記小吃店 (中正路100號)" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'address_friendly_shop[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一家店
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 5. 固定拜票路口/市場 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_fixed_location" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">固定拜票路口/市場</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫路口或市場名稱（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="address_fixed_location[]" oninput="updateInputStatus(this)" placeholder="例：火車站前十字路口" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'address_fixed_location[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一個路口/市場
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 6. 其他 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_other" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">其他</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫其他宣傳方式與說明（可點擊新增多筆）：</p>
+                            <div class="inputs-container space-y-3">
+                                <div class="input-group bg-white p-3 rounded-lg border border-slate-200 relative pr-10">
+                                    <button type="button" onclick="removeInput(this)" class="absolute top-3 right-2 p-1 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                    <div class="mb-2">
+                                        <input type="text" name="other_type_name[]" oninput="updateInputStatus(this)" placeholder="宣傳類型命名 (例：宣傳車)" class="w-full rounded border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                                    </div>
+                                    <div>
+                                        <input type="text" name="address_other[]" oninput="updateInputStatus(this)" placeholder="詳細路線或說明..." class="w-full rounded border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addOtherInput(this)" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆其他宣傳
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100" id="route-section">
+                <div class="flex items-center gap-2 mb-4 border-b pb-3">
+                    <i data-lucide="route" class="text-emerald-600 w-6 h-6"></i>
+                    <h2 class="text-lg font-bold text-slate-800">熱點路線規劃</h2>
+                </div>
+                
+                <p class="text-slate-500 text-sm mb-6">
+                    請勾選您目前已規劃或固定的熱點路線類型。若勾選「有」，請填寫詳細路線範圍與時段。可點擊「+ 新增一筆」增加多條路線。
+                </p>
+
+                <div id="route-container" class="space-y-4">
+                    
+                    <!-- 1. 垃圾車路線 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_garbage_truck" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">垃圾車路線</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫路線名稱或時段（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="route_garbage_truck[]" oninput="updateInputStatus(this)" placeholder="例：和平里垃圾車路線 (19:00-20:00)" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'route_garbage_truck[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆垃圾車路線
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. 一般掃街路線 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_street_sweep" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">一般掃街路線</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫路線與範圍（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="route_street_sweep[]" oninput="updateInputStatus(this)" placeholder="例：中山路-中正路-文化路沿線" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'route_street_sweep[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆掃街路線
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. 菜市場拜票路線 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_traditional_market" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">菜市場拜票路線</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫市場名稱及時段（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="route_traditional_market[]" oninput="updateInputStatus(this)" placeholder="例：建國早市 (每日 08:00-10:00)" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'route_traditional_market[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆菜市場路線
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4. 商圈/夜市拜票路線 -->
+                    <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
+                        <div class="flex items-center justify-between w-full">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" name="has_market_sweep" class="w-5 h-5 rounded text-emerald-600 focus:ring-emerald-500 point-checkbox" onchange="togglePointInput(this)">
+                                <span class="font-medium text-slate-700 text-base">商圈/夜市拜票路線</span>
+                            </label>
+                            <span class="status-badge hidden flex items-center gap-1 text-xs font-medium text-emerald-600 bg-emerald-100 px-2 py-1 rounded-full">
+                                <i data-lucide="check" class="w-3 h-3"></i> 已填寫說明
+                            </span>
+                        </div>
+                        <div class="w-full point-details hidden opacity-0 transition-opacity duration-300">
+                            <p class="text-xs text-emerald-600 mb-2 font-medium">✨ 請填寫商圈/夜市名稱及時段（單筆填寫，可點擊新增）：</p>
+                            <div class="inputs-container space-y-2">
+                                <div class="input-group flex items-start gap-2">
+                                    <input type="text" name="route_market_sweep[]" oninput="updateInputStatus(this)" placeholder="例：站前商圈 (週六下午)" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                                    <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                                        <i data-lucide="x" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="button" onclick="addInput(this, 'route_market_sweep[]')" class="mt-3 text-sm text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-700 transition bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-100 hover:bg-emerald-100 w-fit">
+                                <i data-lucide="plus" class="w-4 h-4"></i> 新增一筆商圈路線
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="flex items-center gap-2 mb-6 border-b pb-3">
+                    <i data-lucide="send" class="text-emerald-600 w-6 h-6"></i>
+                    <h2 class="text-lg font-bold text-slate-800">空軍與社群經營</h2>
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-sm font-semibold text-slate-700 mb-3">1. 個人經營平台 (請填入網址，無則免填)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="flex rounded-lg shadow-sm">
+                                <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-slate-200 bg-slate-50 text-slate-500 text-sm">FB</span>
+                                <input type="url" name="url_facebook" placeholder="粉絲專頁網址" class="flex-1 rounded-r-lg border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                            <div class="flex rounded-lg shadow-sm">
+                                <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-slate-200 bg-slate-50 text-slate-500 text-sm">IG</span>
+                                <input type="url" name="url_instagram" placeholder="IG帳號網址" class="flex-1 rounded-r-lg border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                            <div class="flex rounded-lg shadow-sm">
+                                <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-slate-200 bg-slate-50 text-slate-500 text-sm">YT</span>
+                                <input type="url" name="url_youtube" placeholder="YouTube頻道網址" class="flex-1 rounded-r-lg border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                            <div class="flex rounded-lg shadow-sm">
+                                <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-slate-200 bg-slate-50 text-slate-500 text-sm">Threads</span>
+                                <input type="url" name="url_threads" placeholder="Threads帳號網址" class="flex-1 rounded-r-lg border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100">
+                        <h3 class="text-sm font-semibold text-slate-700 mb-3">2. LINE 組織擴散</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm text-slate-600 mb-1">自有LINE群組人數：</label>
+                                <input type="number" min="0" name="own_line_members" placeholder="例：150人" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-slate-600 mb-1">加入地方既有LINE群組數/總估計人數：</label>
+                                <input type="text" name="local_line_groups" placeholder="例：已加5個群，覆蓋約1200人" class="w-full rounded-lg border border-slate-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                <div class="flex items-center gap-2 mb-6 border-b pb-3">
+                    <i data-lucide="help-circle" class="text-emerald-600 w-6 h-6"></i>
+                    <h2 class="text-lg font-bold text-slate-800">後勤需求與建議事項</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">需要哪些具體後勤支援？ (可複選)</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-2 p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100">
+                                <input type="checkbox" name="support_needs" value="共同造勢活動說明會" class="rounded text-emerald-600 focus:ring-emerald-500">
+                                <span class="text-sm">共同造勢活動 / 說明會協辦</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100">
+                                <input type="checkbox" name="support_needs" value="文宣美編公版" class="rounded text-emerald-600 focus:ring-emerald-500">
+                                <span class="text-sm">公版宣傳文宣 / 視覺排版支援</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100">
+                                <input type="checkbox" name="support_needs" value="社群廣告投放指導" class="rounded text-emerald-600 focus:ring-emerald-500">
+                                <span class="text-sm">網路廣告投放 / 輿情觀測支援</span>
+                            </label>
+                            <label class="flex items-center gap-2 p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100">
+                                <input type="checkbox" name="support_needs" value="競選小物資源發放" class="rounded text-emerald-600 focus:ring-emerald-500">
+                                <span class="text-sm">總部面紙、摺頁等配發支援</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">其他補充意見：</label>
+                        <textarea name="other_comments" rows="3" placeholder="請填寫任何需要補充說明的事情..." class="w-full rounded-lg border border-slate-200 p-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <div class="flex justify-end">
+                <!-- 這裡加上了 id="submitBtn" 與 <span> 標籤，確保程式碼不會當機 -->
+                <button type="submit" id="submitBtn" class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:from-emerald-700 hover:to-teal-700 transition duration-200 flex items-center gap-2 text-lg">
+                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                    <span>送出整備報表</span>
+                </button>
+            </div>
+
+        </form>
+    </main>
+
+    <!-- Custom Alert Modal (Replaces default window.alert) -->
+    <div id="customAlert" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl transform scale-95 transition-transform duration-300" id="customAlertBox">
+            <div class="flex items-center gap-3 mb-4 text-emerald-600">
+                <i data-lucide="check-circle" class="w-8 h-8"></i>
+                <h3 class="text-xl font-bold text-slate-800">資料送出成功</h3>
+            </div>
+            <p id="customAlertMessage" class="text-slate-600 mb-6 whitespace-pre-line leading-relaxed"></p>
+            <div class="flex justify-end">
+                <button type="button" onclick="closeAlert()" class="bg-emerald-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-emerald-700 transition duration-200">
+                    確定
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 初始化 Lucide 圖標
+        lucide.createIcons();
+
+        // 檢查並更新輸入狀態標籤 (顯示「已填寫說明」)
+        function updateInputStatus(element) {
+            const container = element.closest('.propaganda-item');
+            const statusBadge = container.querySelector('.status-badge');
+            
+            const inputs = container.querySelectorAll('input[type="text"], input[type="url"]');
+            let hasValue = false;
+            
+            inputs.forEach(input => {
+                if (input.value.trim().length > 0) {
+                    hasValue = true;
+                }
+            });
+
+            if (hasValue) {
+                statusBadge.classList.remove('hidden');
+            } else {
+                statusBadge.classList.add('hidden');
+            }
+        }
+
+        // 動態新增一般單行輸入框
+        function addInput(btn, nameAttr) {
+            const container = btn.previousElementSibling; // inputs-container
+            
+            let placeholder = "請輸入詳細地址或說明";
+            if (nameAttr.includes('billboard')) placeholder = "例：中山路與中正路交叉口";
+            else if (nameAttr.includes('banner')) placeholder = "例：和平街20號前欄杆";
+            else if (nameAttr.includes('poster')) placeholder = "例：里民活動中心佈告欄";
+            else if (nameAttr.includes('friendly_shop')) placeholder = "例：陳記小吃店 (中正路100號)";
+            else if (nameAttr.includes('fixed_location')) placeholder = "例：火車站前十字路口";
+            else if (nameAttr.includes('garbage_truck')) placeholder = "例：和平里垃圾車路線 (19:00-20:00)";
+            else if (nameAttr.includes('street_sweep')) placeholder = "例：中山路-中正路-文化路沿線";
+            else if (nameAttr.includes('traditional_market')) placeholder = "例：建國早市 (每日 08:00-10:00)";
+            else if (nameAttr.includes('market_sweep')) placeholder = "例：站前商圈 (週六下午)";
+            else if (nameAttr.includes('warden_visited')) placeholder = "例：和平里 - 王大明";
+            else if (nameAttr.includes('warden_coop')) placeholder = "例：建國里 - 李小華";
+
+            const newGroup = document.createElement('div');
+            newGroup.className = 'input-group flex items-start gap-2 mt-2';
+            newGroup.innerHTML = `
+                <input type="text" name="${nameAttr}" oninput="updateInputStatus(this)" placeholder="${placeholder}" class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+                <button type="button" onclick="removeInput(this)" class="p-2 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            `;
+            container.appendChild(newGroup);
+            lucide.createIcons();
+        }
+
+        // 動態新增「其他」類型的雙行輸入框
+        function addOtherInput(btn) {
+            const container = btn.previousElementSibling; // inputs-container
+            const newGroup = document.createElement('div');
+            newGroup.className = 'input-group bg-white p-3 rounded-lg border border-slate-200 relative pr-10 mt-3';
+            newGroup.innerHTML = `
+                <button type="button" onclick="removeInput(this)" class="absolute top-3 right-2 p-1 text-slate-400 hover:text-red-500 transition-colors" title="清除">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+                <div class="mb-2">
+                    <input type="text" name="other_type_name[]" oninput="updateInputStatus(this)" placeholder="宣傳類型命名 (例：宣傳車)" class="w-full rounded border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                </div>
+                <div>
+                    <input type="text" name="address_other[]" oninput="updateInputStatus(this)" placeholder="詳細路線或說明..." class="w-full rounded border border-slate-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                </div>
+            `;
+            container.appendChild(newGroup);
+            lucide.createIcons();
+        }
+
+        // 移除單一輸入框群組
+        function removeInput(btn) {
+            const group = btn.closest('.input-group');
+            const container = group.closest('.inputs-container');
+            
+            if (container.querySelectorAll('.input-group').length > 1) {
+                group.remove();
+                updateInputStatus(container);
+            } else {
+                const inputs = group.querySelectorAll('input');
+                inputs.forEach(input => input.value = '');
+                updateInputStatus(container);
+            }
+        }
+
+        // 切換點位輸入框的顯示狀態
+        function togglePointInput(checkbox) {
+            const container = checkbox.closest('.propaganda-item');
+            const details = container.querySelector('.point-details');
+            
+            if (checkbox.checked) {
+                details.classList.remove('hidden');
+                setTimeout(() => details.classList.remove('opacity-0'), 10);
+                container.classList.add('bg-emerald-50/30', 'border-emerald-200');
+                container.classList.remove('bg-slate-50', 'border-slate-100');
+            } else {
+                details.classList.add('opacity-0');
+                container.classList.remove('bg-emerald-50/30', 'border-emerald-200');
+                container.classList.add('bg-slate-50', 'border-slate-100');
+                
+                setTimeout(() => details.classList.add('hidden'), 300);
+                
+                const inputsContainer = container.querySelector('.inputs-container');
+                const groups = inputsContainer.querySelectorAll('.input-group');
+                
+                const firstInputs = groups[0].querySelectorAll('input');
+                firstInputs.forEach(input => input.value = '');
+                
+                for (let i = 1; i < groups.length; i++) {
+                    groups[i].remove();
+                }
+                
+                updateInputStatus(container);
+            }
+        }
+
+        // 自訂提示框邏輯
+        function showAlert(message) {
+            const modal = document.getElementById('customAlert');
+            const alertBox = document.getElementById('customAlertBox');
+            document.getElementById('customAlertMessage').textContent = message;
+            
+            modal.classList.remove('hidden');
+            void modal.offsetWidth;
+            
+            modal.classList.remove('opacity-0');
+            alertBox.classList.remove('scale-95');
+        }
+
+        function closeAlert() {
+            const modal = document.getElementById('customAlert');
+            const alertBox = document.getElementById('customAlertBox');
+            
+            modal.classList.add('opacity-0');
+            alertBox.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // ======= 表單送出串接 Google Apps Script =======
+        // ⚠️ 請確認下方引號內的網址是您的專屬 Google Script 網址
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyi3g4wWzQ5bY-iE13Lof9_g-R-i9aE_A-d5Q_EIn7v0G3e9w/exec';
+
+        // 💡 新增防呆機制：提醒使用者最上方的必填欄位沒填
+        document.getElementById('submitBtn').addEventListener('click', function(e) {
+            const form = document.getElementById('surveyForm');
+            if (!form.checkValidity()) {
+                alert("⚠️ 無法送出：\n請捲動到網頁最上方，確認「基本資料」中帶有紅色星號（*）的必填欄位都已經填寫完畢喔！");
+            }
+        });
+
+        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // 1. 強健的寫法：直接重寫按鈕的內部 HTML，避免圖標套件轉換導致的錯誤
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            submitBtn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-5 h-5"></i><span>資料傳送中...</span>';
+            lucide.createIcons(); // 重新渲染轉圈圈圖示
+            
+            // 2. 收集表單資料
+            const formData = new FormData(this);
+            const dataObj = {
+                support_needs: [],
+                propaganda_points: {}
+            };
+            
+            formData.forEach((value, key) => {
+                if (key === 'support_needs') {
+                    dataObj.support_needs.push(value);
+                } else if (key.startsWith('has_') || key.startsWith('address_') || key.startsWith('other_type_name') || key.startsWith('route_') || key.startsWith('warden_')) {
+                    // 點位與路線陣列資料稍後另外處理
+                } else {
+                    dataObj[key] = value;
+                }
+            });
+
+            // 整理宣傳點位與熱點路線資料 (蒐集陣列)
+            const pointItems = document.querySelectorAll('.propaganda-item');
+            
+            pointItems.forEach((item) => {
+                const checkbox = item.querySelector('.point-checkbox');
+                if (checkbox && checkbox.checked) {
+                    let typeName = checkbox.nextElementSibling.textContent.trim();
+                    
+                    if (typeName === '其他') {
+                        const groups = item.querySelectorAll('.input-group');
+                        let otherList = [];
+                        groups.forEach(group => {
+                            const nameInput = group.querySelector('input[name="other_type_name[]"]');
+                            const descInput = group.querySelector('input[name="address_other[]"]');
+                            const nameVal = nameInput ? nameInput.value.trim() : '';
+                            const descVal = descInput ? descInput.value.trim() : '';
+                            if (nameVal || descVal) {
+                                otherList.push(`${nameVal || '未命名'}：${descVal}`);
+                            }
+                        });
+                        if (otherList.length > 0) {
+                            dataObj.propaganda_points[typeName] = otherList;
+                        }
+                    } else {
+                        const inputs = item.querySelectorAll('input[type="text"], input[type="url"]');
+                        let values = [];
+                        inputs.forEach(input => {
+                            if(input.value.trim() !== '') {
+                                values.push(input.value.trim());
+                            }
+                        });
+                        if (values.length > 0) {
+                            dataObj.propaganda_points[typeName] = values;
+                        }
+                    }
+                }
+            });
+
+            // 3. 透過 fetch API 傳送資料到 Google Sheet
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(dataObj),
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    resetButtonState();
+                    showAlert(`✅ 已成功將「${dataObj.candidate_name}」的數據寫入 Google 試算表！\n\n感謝您的填寫，系統已完整記錄所有資料。`);
+                } else {
+                    throw new Error('回傳狀態非 success');
+                }
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                resetButtonState();
+                alert('⚠️ 資料傳送失敗！\n1. 請確認 Google 試算表網址是否正確貼上。\n2. 部署 Apps Script 時，請確認「誰可以存取」有設定為「所有人」。');
+            });
+
+            // 恢復按鈕狀態的輔助函式 (💡已修復之前的錯字 Bug)
+            function resetButtonState() {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitBtn.innerHTML = '<i data-lucide="check-circle-2" class="w-5 h-5"></i><span>送出整備報表</span>';
+                lucide.createIcons(); // 重新渲染原本的打勾圖示
+            }
+        });
+    </script>
+</body>
+</html>
