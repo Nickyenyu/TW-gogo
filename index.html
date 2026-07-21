@@ -332,6 +332,21 @@
                     </div>
 
                 </div>
+
+                <!-- 檔案上傳區塊 (新增) -->
+                <div class="mt-8 p-5 bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i data-lucide="upload-cloud" class="text-emerald-600 w-5 h-5"></i>
+                        <h3 class="text-sm font-semibold text-slate-700">已有整理好的點位清單？(選填)</h3>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4">如果您已經有統整好的 Excel 或 Word 檔案，可直接在此上傳，免去手動逐筆填寫的麻煩。</p>
+                    
+                    <input type="file" id="fileUpload" accept=".xlsx,.xls,.csv,.doc,.docx,.pdf" class="block w-full text-sm text-slate-500 
+                        file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 
+                        file:text-sm file:font-semibold file:bg-emerald-100 file:text-emerald-700 
+                        hover:file:bg-emerald-200 cursor-pointer transition">
+                    <p class="text-xs text-red-500 mt-2">* 檔案大小請控制在 5MB 以內</p>
+                </div>
             </section>
 
             <section class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100" id="route-section">
@@ -345,6 +360,7 @@
                 </p>
 
                 <div id="route-container" class="space-y-4">
+                    
                     
                     <!-- 1. 垃圾車路線 -->
                     <div class="propaganda-item bg-slate-50 p-4 rounded-xl border border-slate-100 flex flex-col gap-3 transition-all">
@@ -538,7 +554,6 @@
             </section>
 
             <div class="flex justify-end">
-                <!-- 這裡加上了 id="submitBtn" 與 <span> 標籤，確保程式碼不會當機 -->
                 <button type="submit" id="submitBtn" class="bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:from-emerald-700 hover:to-teal-700 transition duration-200 flex items-center gap-2 text-lg">
                     <i data-lucide="check-circle-2" class="w-5 h-5"></i>
                     <span>送出整備報表</span>
@@ -548,7 +563,7 @@
         </form>
     </main>
 
-    <!-- Custom Alert Modal (Replaces default window.alert) -->
+    <!-- Custom Alert Modal -->
     <div id="customAlert" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 hidden opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4 shadow-xl transform scale-95 transition-transform duration-300" id="customAlertBox">
             <div class="flex items-center gap-3 mb-4 text-emerald-600">
@@ -710,10 +725,9 @@
         }
 
         // ======= 表單送出串接 Google Apps Script =======
-        // ⚠️ 請確認下方引號內的網址是您的專屬 Google Script 網址
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBsoOB7Ncgw5eQo4gfTZnvxND_BRETFNjXYrKoMmw9rvcANv_lPUpDpRd3SwWHMrRwVg/exec';
 
-        // 💡 新增防呆機制：提醒使用者最上方的必填欄位沒填
+        // 💡 必填檢查防呆
         document.getElementById('submitBtn').addEventListener('click', function(e) {
             const form = document.getElementById('surveyForm');
             if (!form.checkValidity()) {
@@ -721,18 +735,18 @@
             }
         });
 
-        document.getElementById('surveyForm').addEventListener('submit', function(e) {
+        // 🚀 整合檔案上傳與表單送出邏輯 (使用 async/await)
+        document.getElementById('surveyForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const submitBtn = document.getElementById('submitBtn');
             
-            // 1. 強健的寫法：直接重寫按鈕的內部 HTML，避免圖標套件轉換導致的錯誤
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
-            submitBtn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-5 h-5"></i><span>資料傳送中...</span>';
-            lucide.createIcons(); // 重新渲染轉圈圈圖示
+            submitBtn.innerHTML = '<i data-lucide="loader-2" class="animate-spin w-5 h-5"></i><span>檔案與資料傳送中...</span>';
+            lucide.createIcons();
             
-            // 2. 收集表單資料
+            // 1. 收集表單文字資料
             const formData = new FormData(this);
             const dataObj = {
                 support_needs: [],
@@ -743,15 +757,14 @@
                 if (key === 'support_needs') {
                     dataObj.support_needs.push(value);
                 } else if (key.startsWith('has_') || key.startsWith('address_') || key.startsWith('other_type_name') || key.startsWith('route_') || key.startsWith('warden_')) {
-                    // 點位與路線陣列資料稍後另外處理
+                    // 點位與路線稍後處理
                 } else {
                     dataObj[key] = value;
                 }
             });
 
-            // 整理宣傳點位與熱點路線資料 (蒐集陣列)
+            // 整理宣傳點位與熱點路線陣列
             const pointItems = document.querySelectorAll('.propaganda-item');
-            
             pointItems.forEach((item) => {
                 const checkbox = item.querySelector('.point-checkbox');
                 if (checkbox && checkbox.checked) {
@@ -787,35 +800,82 @@
                 }
             });
 
-            // 3. 透過 fetch API 傳送資料到 Google Sheet
+            // 2. 處理檔案上傳轉碼 (Base64)
+            const fileInput = document.getElementById('fileUpload');
+            let filePayload = null;
+
+            if (fileInput && fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                
+                // 檢查檔案大小限制 (5MB = 5 * 1024 * 1024)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert("檔案太大囉！請上傳 5MB 以內的檔案。");
+                    resetButtonState();
+                    return;
+                }
+                
+                try {
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (event) => resolve(event.target.result.split(',')[1]);
+                        reader.onerror = (error) => reject(error);
+                        reader.readAsDataURL(file);
+                    });
+
+                    filePayload = {
+                        name: file.name,
+                        mimetype: file.type,
+                        data: base64Data
+                    };
+                } catch (err) {
+                    alert("讀取檔案時發生錯誤，請重新選擇檔案。");
+                    resetButtonState();
+                    return;
+                }
+            }
+
+            // 3. 打包所有資料
+            const finalPayload = {
+                formData: dataObj,
+                fileData: filePayload
+            };
+
+            // 4. 透過 fetch 傳送資料到 Google
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                body: JSON.stringify(dataObj),
+                body: JSON.stringify(finalPayload),
                 headers: {
                     'Content-Type': 'text/plain;charset=utf-8',
                 }
             })
             .then(response => response.json())
             .then(data => {
-                if (data.result === 'success') {
+                if (data.status === 'success' || data.result === 'success') {
                     resetButtonState();
-                    showAlert(`✅ 已成功將「${dataObj.candidate_name}」的數據寫入 Google 試算表！\n\n感謝您的填寫，系統已完整記錄所有資料。`);
+                    
+                    let successMessage = `✅ 已成功將「${dataObj.candidate_name}」的數據寫入 Google 試算表！\n\n感謝您的填寫，系統已完整記錄所有資料。`;
+                    if (filePayload) {
+                        successMessage += `\n(您上傳的附件也已同步備份至雲端)`;
+                    }
+                    
+                    showAlert(successMessage);
+                    document.getElementById('surveyForm').reset(); // 成功後清空表單
                 } else {
-                    throw new Error('回傳狀態非 success');
+                    throw new Error(data.message || '伺服器回傳錯誤');
                 }
             })
             .catch(error => {
                 console.error('Error!', error.message);
                 resetButtonState();
-                alert('⚠️ 資料傳送失敗！\n1. 請確認 Google 試算表網址是否正確貼上。\n2. 部署 Apps Script 時，請確認「誰可以存取」有設定為「所有人」。');
+                alert('⚠️ 資料傳送失敗！\n1. 請確認 Apps Script 程式碼已更新為支援檔案上傳的版本。\n2. 部署 Apps Script 時，務必選擇「建立新版本」。');
             });
 
-            // 恢復按鈕狀態的輔助函式 (💡已修復之前的錯字 Bug)
+            // 恢復按鈕狀態
             function resetButtonState() {
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
                 submitBtn.innerHTML = '<i data-lucide="check-circle-2" class="w-5 h-5"></i><span>送出整備報表</span>';
-                lucide.createIcons(); // 重新渲染原本的打勾圖示
+                lucide.createIcons();
             }
         });
     </script>
